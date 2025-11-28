@@ -1,0 +1,133 @@
+@prefix : <http://www.semanticweb.org/nycmayors#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/nycmayors#> .
+
+<http://www.semanticweb.org/nycmayors> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+:almaMater rdf:type owl:ObjectProperty ;
+           rdfs:domain :Mayor ;
+           rdfs:range :University .
+
+:locatedIn rdf:type owl:ObjectProperty ;
+           rdfs:domain :University ;
+           rdfs:range :Borough .
+
+:memberOfParty rdf:type owl:ObjectProperty ;
+               rdfs:domain :Mayor ;
+               rdfs:range :PoliticalParty .
+
+:succeededBy rdf:type owl:ObjectProperty ;
+             rdfs:domain :Mayor ;
+             rdfs:range :Mayor .
+
+#################################################################
+#    Data properties
+#################################################################
+
+:birthDate rdf:type owl:DatatypeProperty ;
+           rdfs:range xsd:date .
+
+:netWorthUSD rdf:type owl:DatatypeProperty ;
+             rdfs:range xsd:integer .
+
+:termEnd rdf:type owl:DatatypeProperty ;
+         rdfs:range xsd:date .
+
+:termStart rdf:type owl:DatatypeProperty ;
+           rdfs:range xsd:date .
+
+foaf:name rdf:type owl:DatatypeProperty ;
+          rdfs:range xsd:string .
+
+#################################################################
+#    Classes
+#################################################################
+
+:Borough rdf:type owl:Class .
+:Mayor rdf:type owl:Class .
+:PoliticalParty rdf:type owl:Class .
+:University rdf:type owl:Class .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:Baltimore rdf:type owl:NamedIndividual , :Borough ;
+           foaf:name "Baltimore, MD" .
+
+:BillDeBlasio rdf:type owl:NamedIndividual , :Mayor ;
+              :almaMater :ColumbiaUniversity ;
+              :memberOfParty :DemocraticParty ;
+              :succeededBy :EricAdams ;
+              :birthDate "1961-05-08"^^xsd:date ;
+              :netWorthUSD 2500000 ;
+              :termEnd "2021-12-31"^^xsd:date ;
+              :termStart "2014-01-01"^^xsd:date ;
+              foaf:name "Bill de Blasio" .
+
+:ColumbiaUniversity rdf:type owl:NamedIndividual , :University ;
+                    :locatedIn :Manhattan ;
+                    foaf:name "Columbia University" .
+
+:DemocraticParty rdf:type owl:NamedIndividual , :PoliticalParty ;
+                 foaf:name "Democratic Party" .
+
+:EricAdams rdf:type owl:NamedIndividual , :Mayor ;
+           :almaMater :JohnJayCollege ;
+           :memberOfParty :DemocraticParty ;
+           # No succeededBy yet as he is current
+           :birthDate "1960-09-01"^^xsd:date ;
+           :termStart "2022-01-01"^^xsd:date ;
+           # No termEnd
+           # No Net Worth (Allows for OPTIONAL query)
+           foaf:name "Eric Adams" .
+
+:Independent rdf:type owl:NamedIndividual , :PoliticalParty ;
+             foaf:name "Independent" .
+
+:JohnJayCollege rdf:type owl:NamedIndividual , :University ;
+                :locatedIn :Manhattan ;
+                foaf:name "John Jay College of Criminal Justice" .
+
+:JohnsHopkins rdf:type owl:NamedIndividual , :University ;
+              :locatedIn :Baltimore ;
+              foaf:name "Johns Hopkins University" .
+
+:Manhattan rdf:type owl:NamedIndividual , :Borough ;
+           foaf:name "Manhattan, NY" .
+
+:MichaelBloomberg rdf:type owl:NamedIndividual , :Mayor ;
+                  :almaMater :JohnsHopkins ;
+                  :memberOfParty :Independent ;
+                  :succeededBy :BillDeBlasio ;
+                  :birthDate "1942-02-14"^^xsd:date ;
+                  :netWorthUSD 96300000000 ;
+                  :termEnd "2013-12-31"^^xsd:date ;
+                  :termStart "2002-01-01"^^xsd:date ;
+                  foaf:name "Michael Bloomberg" .
+
+:NYU rdf:type owl:NamedIndividual , :University ;
+     :locatedIn :Manhattan ;
+     foaf:name "New York University" .
+
+:RepublicanParty rdf:type owl:NamedIndividual , :PoliticalParty ;
+                 foaf:name "Republican Party" .
+
+:RudyGiuliani rdf:type owl:NamedIndividual , :Mayor ;
+              :almaMater :NYU ;
+              :memberOfParty :RepublicanParty ;
+              :succeededBy :MichaelBloomberg ;
+              :birthDate "1944-05-28"^^xsd:date ;
+              :netWorthUSD 40000000 ;
+              :termEnd "2001-12-31"^^xsd:date ;
+              :termStart "1994-01-01"^^xsd:date ;
+              foaf:name "Rudy Giuliani" .

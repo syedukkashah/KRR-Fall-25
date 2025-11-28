@@ -1,0 +1,65 @@
+# PREFIXES
+PREFIX : <http://www.semanticweb.org/nycmayors#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+# Query 1: Simple triple pattern matching (with DISTINCT)
+# names and birth dates of all mayors
+SELECT DISTINCT ?name ?birthDate
+WHERE {
+  ?mayor a :Mayor .
+  ?mayor foaf:name ?name .
+  ?mayor :birthDate ?birthDate .
+}
+
+
+# Query 2: Filtering using logical/numerical operators AND use of OPTIONAL
+# mayors with net worth > 10 mil or currently serving (no end date)
+
+SELECT DISTINCT ?name ?netWorth ?termEnd
+WHERE {
+  ?mayor a :Mayor ;
+         foaf:name ?name .
+  OPTIONAL { ?mayor :netWorthUSD ?netWorth } .
+  OPTIONAL { ?mayor :termEnd ?termEnd } .
+  
+  FILTER (?netWorth > 10000000 || !BOUND(?termEnd))
+}
+
+
+# Query 3: use of OPTIONAL (Term Dates)
+# mayors with term dates (optional end dates)
+
+SELECT DISTINCT ?name ?start ?end
+WHERE {
+  ?mayor a :Mayor ;
+         foaf:name ?name ;
+         :termStart ?start .
+  OPTIONAL { ?mayor :termEnd ?end . }
+}
+
+# ---------------------------------------------------------
+# Query 4: Aggregation (COUNT)
+# num of mayors in each party
+# ---------------------------------------------------------
+SELECT ?partyName (COUNT(DISTINCT ?mayor) AS ?mayorCount)
+WHERE {
+  ?mayor :memberOfParty ?party .
+  ?party foaf:name ?partyName .
+}
+GROUP BY ?partyName
+
+# ---------------------------------------------------------
+# Query 5: Graph traversal across at least 3 hops
+# borough of the alma mater of the mayor who succeeded Rudy Giulani
+SELECT DISTINCT ?successorName ?universityName ?locationName
+WHERE {
+  :RudyGiuliani :succeededBy ?successor .
+  ?successor foaf:name ?successorName .
+  
+  ?successor :almaMater ?university .
+  ?university foaf:name ?universityName .
+  
+  ?university :locatedIn ?location .
+  ?location foaf:name ?locationName .
+}
