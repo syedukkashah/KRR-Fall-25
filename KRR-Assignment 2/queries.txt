@@ -15,7 +15,6 @@ WHERE {
 
 # Query 2: Filtering using logical/numerical operators AND use of OPTIONAL
 # mayors with net worth > 10 mil or currently serving (no end date)
-
 SELECT DISTINCT ?name ?netWorth ?termEnd
 WHERE {
   ?mayor a :Mayor ;
@@ -38,10 +37,8 @@ WHERE {
   OPTIONAL { ?mayor :termEnd ?end . }
 }
 
-# ---------------------------------------------------------
 # Query 4: Aggregation (COUNT)
 # num of mayors in each party
-# ---------------------------------------------------------
 SELECT ?partyName (COUNT(DISTINCT ?mayor) AS ?mayorCount)
 WHERE {
   ?mayor :memberOfParty ?party .
@@ -49,9 +46,10 @@ WHERE {
 }
 GROUP BY ?partyName
 
-# ---------------------------------------------------------
+
 # Query 5: Graph traversal across at least 3 hops
 # borough of the alma mater of the mayor who succeeded Rudy Giulani
+
 SELECT DISTINCT ?successorName ?universityName ?locationName
 WHERE {
   :RudyGiuliani :succeededBy ?successor .
@@ -63,3 +61,4 @@ WHERE {
   ?university :locatedIn ?location .
   ?location foaf:name ?locationName .
 }
+
