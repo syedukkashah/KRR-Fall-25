@@ -9,10 +9,6 @@
 
 <http://www.semanticweb.org/nycmayors> rdf:type owl:Ontology .
 
-#################################################################
-#    Object Properties
-#################################################################
-
 :almaMater rdf:type owl:ObjectProperty ;
            rdfs:domain :Mayor ;
            rdfs:range :University .
@@ -29,10 +25,6 @@
              rdfs:domain :Mayor ;
              rdfs:range :Mayor .
 
-#################################################################
-#    Data properties
-#################################################################
-
 :birthDate rdf:type owl:DatatypeProperty ;
            rdfs:range xsd:date .
 
@@ -48,18 +40,12 @@
 foaf:name rdf:type owl:DatatypeProperty ;
           rdfs:range xsd:string .
 
-#################################################################
-#    Classes
-#################################################################
 
 :Borough rdf:type owl:Class .
 :Mayor rdf:type owl:Class .
 :PoliticalParty rdf:type owl:Class .
 :University rdf:type owl:Class .
 
-#################################################################
-#    Individuals
-#################################################################
 
 :Baltimore rdf:type owl:NamedIndividual , :Borough ;
            foaf:name "Baltimore, MD" .
