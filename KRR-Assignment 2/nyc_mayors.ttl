@@ -70,11 +70,8 @@ foaf:name rdf:type owl:DatatypeProperty ;
 :EricAdams rdf:type owl:NamedIndividual , :Mayor ;
            :almaMater :JohnJayCollege ;
            :memberOfParty :DemocraticParty ;
-           # No succeededBy yet as he is current
            :birthDate "1960-09-01"^^xsd:date ;
            :termStart "2022-01-01"^^xsd:date ;
-           # No termEnd
-           # No Net Worth (Allows for OPTIONAL query)
            foaf:name "Eric Adams" .
 
 :Independent rdf:type owl:NamedIndividual , :PoliticalParty ;
